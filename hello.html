@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Current Latitude and Longitude</title>
+</head>
+<body>
+  <h1>Current Latitude and Longitude</h1>
+
+  <p>Latitude: <span id="latitude"></span></p>
+  <p>Longitude: <span id="longitude"></span></p>
+  <a id="mapurl" href="google.com">halo</a>
+  <script>
+    function showPosition(position) {
+      var latitudeElement = document.getElementById("latitude");
+      var longitudeElement = document.getElementById("longitude");
+
+      // Set the text content of the elements to the current latitude and longitude
+      latitudeElement.textContent = position.coords.latitude;
+      longitudeElement.textContent = position.coords.longitude;
+
+      var lat = position.coords.latitude;
+      var long = position.coords.longitude;
+
+      var anchorElement = document.getElementById("mapurl");
+      var map_address = "https://www.google.com/maps/dir/"+lat+","+long+"/18.8029029,98.9478818";
+      anchorElement.href = map_address;
+    }
+
+    function showError(error) {
+      var latitudeElement = document.getElementById("latitude");
+      var longitudeElement = document.getElementById("longitude");
+
+      // Set error message if geolocation is not available or denied
+      latitudeElement.textContent = "Error: " + error.message;
+      longitudeElement.textContent = "Error: " + error.message;
+    }
+
+    // Check if geolocation is supported by the browser
+    if (navigator.geolocation) {
+      // Request current position
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+      // Geolocation is not supported
+      var latitudeElement = document.getElementById("latitude");
+      var longitudeElement = document.getElementById("longitude");
+
+      latitudeElement.textContent = "Geolocation is not supported.";
+      longitudeElement.textContent = "Geolocation is not supported.";
+    }
+  </script>
+</body>
+</html>
